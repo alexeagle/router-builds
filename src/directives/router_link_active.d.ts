@@ -83,7 +83,7 @@ export declare class RouterLinkActive implements OnChanges, OnDestroy, AfterCont
         exact: boolean;
     };
     constructor(router: Router, element: ElementRef, renderer: Renderer);
-    isActive: boolean;
+    readonly isActive: boolean;
     ngAfterContentInit(): void;
     routerLinkActive: string[] | string;
     ngOnChanges(changes: {}): any;
