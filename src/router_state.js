@@ -11,9 +11,12 @@ import { UrlSegment, equalSegments } from './url_tree';
 import { merge, shallowEqual, shallowEqualArrays } from './utils/collection';
 import { Tree, TreeNode } from './utils/tree';
 /**
+ * \@whatItDoes Represents the state of the router.
  *
+ * \@howToUse
  *
  * ```
+ * \@Component({templateUrl:'template.html'})
  * class MyComponent {
  *   constructor(router: Router) {
  *     const state: RouterState = router.routerState;
@@ -25,15 +28,18 @@ import { Tree, TreeNode } from './utils/tree';
  * }
  * ```
  *
+ * \@description
  * RouterState is a tree of activated routes. Every node in this tree knows about the "consumed" URL
  * segments,
  * the extracted parameters, and the resolved data.
  *
  * See {\@link ActivatedRoute} for more information.
  *
+ * \@stable
  */
 export class RouterState extends Tree {
     /**
+     * \@internal
      * @param {?} root
      * @param {?} snapshot
      */
@@ -84,11 +90,14 @@ export function createEmptyStateSnapshot(urlTree, rootComponent) {
     return new RouterStateSnapshot('', new TreeNode(activated, []));
 }
 /**
+ * \@whatItDoes Contains the information about a route associated with a component loaded in an
  * outlet.
  * An `ActivatedRoute` can also be used to traverse the router state tree.
  *
+ * \@howToUse
  *
  * ```
+ * \@Component({...})
  * class MyComponent {
  *   constructor(route: ActivatedRoute) {
  *     const id: Observable<string> = route.params.map(p => p.id);
@@ -99,9 +108,11 @@ export function createEmptyStateSnapshot(urlTree, rootComponent) {
  * }
  * ```
  *
+ * \@stable
  */
 export class ActivatedRoute {
     /**
+     * \@internal
      * @param {?} url
      * @param {?} params
      * @param {?} queryParams
@@ -164,9 +175,15 @@ function ActivatedRoute_tsickle_Closure_declarations() {
      * @type {?}
      */
     ActivatedRoute.prototype.snapshot;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     ActivatedRoute.prototype._futureSnapshot;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     ActivatedRoute.prototype._routerState;
     /**
      * An observable of the URL segments matched by this route
@@ -202,6 +219,7 @@ function ActivatedRoute_tsickle_Closure_declarations() {
     ActivatedRoute.prototype.component;
 }
 /**
+ * \@internal
  * @param {?} route
  * @return {?}
  */
@@ -230,12 +248,15 @@ export function inheritedParamsDataResolve(route) {
     }, /** @type {?} */ ({ params: {}, data: {}, resolve: {} }));
 }
 /**
+ * \@whatItDoes Contains the information about a route associated with a component loaded in an
  * outlet
  * at a particular moment in time. ActivatedRouteSnapshot can also be used to traverse the router
  * state tree.
  *
+ * \@howToUse
  *
  * ```
+ * \@Component({templateUrl:'./my-component.html'})
  * class MyComponent {
  *   constructor(route: ActivatedRoute) {
  *     const id: string = route.snapshot.params.id;
@@ -245,9 +266,11 @@ export function inheritedParamsDataResolve(route) {
  * }
  * ```
  *
+ * \@stable
  */
 export class ActivatedRouteSnapshot {
     /**
+     * \@internal
      * @param {?} url
      * @param {?} params
      * @param {?} queryParams
@@ -313,17 +336,35 @@ export class ActivatedRouteSnapshot {
     }
 }
 function ActivatedRouteSnapshot_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@internal *
+     * @type {?}
+     */
     ActivatedRouteSnapshot.prototype._routeConfig;
-    /** @type {?} */
+    /**
+     * \@internal *
+     * @type {?}
+     */
     ActivatedRouteSnapshot.prototype._urlSegment;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     ActivatedRouteSnapshot.prototype._lastPathIndex;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     ActivatedRouteSnapshot.prototype._resolve;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     ActivatedRouteSnapshot.prototype._resolvedData;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     ActivatedRouteSnapshot.prototype._routerState;
     /**
      * The URL segments matched by this route
@@ -362,9 +403,12 @@ function ActivatedRouteSnapshot_tsickle_Closure_declarations() {
     ActivatedRouteSnapshot.prototype.component;
 }
 /**
+ * \@whatItDoes Represents the state of the router at a moment in time.
  *
+ * \@howToUse
  *
  * ```
+ * \@Component({templateUrl:'template.html'})
  * class MyComponent {
  *   constructor(router: Router) {
  *     const state: RouterState = router.routerState;
@@ -377,12 +421,15 @@ function ActivatedRouteSnapshot_tsickle_Closure_declarations() {
  * }
  * ```
  *
+ * \@description
  * RouterStateSnapshot is a tree of activated route snapshots. Every node in this tree knows about
  * the "consumed" URL segments, the extracted parameters, and the resolved data.
  *
+ * \@stable
  */
 export class RouterStateSnapshot extends Tree {
     /**
+     * \@internal
      * @param {?} url
      * @param {?} root
      */
@@ -429,22 +476,23 @@ function serializeNode(node) {
  */
 export function advanceActivatedRoute(route) {
     if (route.snapshot) {
-        if (!shallowEqual(route.snapshot.queryParams, route._futureSnapshot.queryParams)) {
+        const /** @type {?} */ currentSnapshot = route.snapshot;
+        route.snapshot = route._futureSnapshot;
+        if (!shallowEqual(currentSnapshot.queryParams, route._futureSnapshot.queryParams)) {
             ((route.queryParams)).next(route._futureSnapshot.queryParams);
         }
-        if (route.snapshot.fragment !== route._futureSnapshot.fragment) {
+        if (currentSnapshot.fragment !== route._futureSnapshot.fragment) {
             ((route.fragment)).next(route._futureSnapshot.fragment);
         }
-        if (!shallowEqual(route.snapshot.params, route._futureSnapshot.params)) {
+        if (!shallowEqual(currentSnapshot.params, route._futureSnapshot.params)) {
             ((route.params)).next(route._futureSnapshot.params);
         }
-        if (!shallowEqualArrays(route.snapshot.url, route._futureSnapshot.url)) {
+        if (!shallowEqualArrays(currentSnapshot.url, route._futureSnapshot.url)) {
             ((route.url)).next(route._futureSnapshot.url);
         }
-        if (!equalParamsAndUrlSegments(route.snapshot, route._futureSnapshot)) {
+        if (!equalParamsAndUrlSegments(currentSnapshot, route._futureSnapshot)) {
             ((route.data)).next(route._futureSnapshot.data);
         }
-        route.snapshot = route._futureSnapshot;
     }
     else {
         route.snapshot = route._futureSnapshot;
@@ -458,6 +506,9 @@ export function advanceActivatedRoute(route) {
  * @return {?}
  */
 export function equalParamsAndUrlSegments(a, b) {
-    return shallowEqual(a.params, b.params) && equalSegments(a.url, b.url);
+    const /** @type {?} */ equalUrlParams = shallowEqual(a.params, b.params) && equalSegments(a.url, b.url);
+    const /** @type {?} */ parentsMismatch = !a.parent !== !b.parent;
+    return equalUrlParams && !parentsMismatch &&
+        (!a.parent || equalParamsAndUrlSegments(a.parent, b.parent));
 }
 //# sourceMappingURL=router_state.js.map

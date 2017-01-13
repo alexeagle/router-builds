@@ -6,7 +6,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /**
+ * \@whatItDoes Provides a way to customize when activated routes get reused.
  *
+ * \@experimental
  * @abstract
  */
 export class RouteReuseStrategy {

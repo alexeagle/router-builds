@@ -29,7 +29,9 @@ import { DefaultUrlHandlingStrategy } from './url_handling_strategy';
 import { UrlTree, containsTree, createEmptyUrlTree } from './url_tree';
 import { andObservables, forEach, merge, waitForMap, wrapIntoObservable } from './utils/collection';
 /**
+ * \@whatItDoes Represents an event triggered when a navigation starts.
  *
+ * \@stable
  */
 export class NavigationStart {
     /**
@@ -41,18 +43,27 @@ export class NavigationStart {
         this.url = url;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() { return `NavigationStart(id: ${this.id}, url: '${this.url}')`; }
 }
 function NavigationStart_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationStart.prototype.id;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationStart.prototype.url;
 }
 /**
+ * \@whatItDoes Represents an event triggered when a navigation ends successfully.
  *
+ * \@stable
  */
 export class NavigationEnd {
     /**
@@ -66,6 +77,7 @@ export class NavigationEnd {
         this.urlAfterRedirects = urlAfterRedirects;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() {
@@ -73,15 +85,26 @@ export class NavigationEnd {
     }
 }
 function NavigationEnd_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationEnd.prototype.id;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationEnd.prototype.url;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationEnd.prototype.urlAfterRedirects;
 }
 /**
+ * \@whatItDoes Represents an event triggered when a navigation is canceled.
  *
+ * \@stable
  */
 export class NavigationCancel {
     /**
@@ -95,20 +118,32 @@ export class NavigationCancel {
         this.reason = reason;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() { return `NavigationCancel(id: ${this.id}, url: '${this.url}')`; }
 }
 function NavigationCancel_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationCancel.prototype.id;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationCancel.prototype.url;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationCancel.prototype.reason;
 }
 /**
+ * \@whatItDoes Represents an event triggered when a navigation fails due to an unexpected error.
  *
+ * \@stable
  */
 export class NavigationError {
     /**
@@ -122,6 +157,7 @@ export class NavigationError {
         this.error = error;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() {
@@ -129,15 +165,26 @@ export class NavigationError {
     }
 }
 function NavigationError_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationError.prototype.id;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationError.prototype.url;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     NavigationError.prototype.error;
 }
 /**
+ * \@whatItDoes Represents an event triggered when routes are recognized.
  *
+ * \@stable
  */
 export class RoutesRecognized {
     /**
@@ -153,6 +200,7 @@ export class RoutesRecognized {
         this.state = state;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() {
@@ -160,13 +208,25 @@ export class RoutesRecognized {
     }
 }
 function RoutesRecognized_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     RoutesRecognized.prototype.id;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     RoutesRecognized.prototype.url;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     RoutesRecognized.prototype.urlAfterRedirects;
-    /** @type {?} */
+    /**
+     * \@docsNotRequired
+     * @type {?}
+     */
     RoutesRecognized.prototype.state;
 }
 /**
@@ -211,10 +271,13 @@ export class DefaultRouteReuseStrategy {
     }
 }
 /**
+ * \@whatItDoes Provides the navigation and url manipulation capabilities.
  *
  * See {\@link Routes} for more details and examples.
  *
+ * \@ngModule RouterModule
  *
+ * \@stable
  */
 export class Router {
     /**
@@ -260,6 +323,7 @@ export class Router {
         this.processNavigations();
     }
     /**
+     * \@internal
      * TODO: this should be removed once the constructor of the router made internal
      * @param {?} rootComponentType
      * @return {?}
@@ -288,17 +352,8 @@ export class Router {
         if (!this.locationSubscription) {
             this.locationSubscription = (this.location.subscribe(Zone.current.wrap((change) => {
                 const /** @type {?} */ rawUrlTree = this.urlSerializer.parse(change['url']);
-                const /** @type {?} */ lastNavigation = this.navigations.value;
-                // If the user triggers a navigation imperatively (e.g., by using navigateByUrl),
-                // and that navigation results in 'replaceState' that leads to the same URL,
-                // we should skip those.
-                if (lastNavigation && lastNavigation.imperative &&
-                    lastNavigation.rawUrl.toString() === rawUrlTree.toString()) {
-                    return;
-                }
-                setTimeout(() => {
-                    this.scheduleNavigation(rawUrlTree, false, { skipLocationChange: change['pop'], replaceUrl: true });
-                }, 0);
+                const /** @type {?} */ source = change['type'] === 'popstate' ? 'popstate' : 'hashchange';
+                setTimeout(() => { this.scheduleNavigation(rawUrlTree, source, { replaceUrl: true }); }, 0);
             })));
         }
     }
@@ -338,6 +393,7 @@ export class Router {
         this.config = config;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     ngOnDestroy() { this.dispose(); }
@@ -426,10 +482,10 @@ export class Router {
      */
     navigateByUrl(url, extras = { skipLocationChange: false }) {
         if (url instanceof UrlTree) {
-            return this.scheduleNavigation(this.urlHandlingStrategy.merge(url, this.rawUrlTree), true, extras);
+            return this.scheduleNavigation(this.urlHandlingStrategy.merge(url, this.rawUrlTree), 'imperative', extras);
         }
         const /** @type {?} */ urlTree = this.urlSerializer.parse(url);
-        return this.scheduleNavigation(this.urlHandlingStrategy.merge(urlTree, this.rawUrlTree), true, extras);
+        return this.scheduleNavigation(this.urlHandlingStrategy.merge(urlTree, this.rawUrlTree), 'imperative', extras);
     }
     /**
      * Navigate based on the provided array of commands and a starting point.
@@ -456,6 +512,7 @@ export class Router {
      * @return {?}
      */
     navigate(commands, extras = { skipLocationChange: false }) {
+        validateCommands(commands);
         if (typeof extras.queryParams === 'object' && extras.queryParams !== null) {
             extras.queryParams = this.removeEmptyProps(extras.queryParams);
         }
@@ -521,11 +578,26 @@ export class Router {
     }
     /**
      * @param {?} rawUrl
-     * @param {?} imperative
+     * @param {?} source
      * @param {?} extras
      * @return {?}
      */
-    scheduleNavigation(rawUrl, imperative, extras) {
+    scheduleNavigation(rawUrl, source, extras) {
+        const /** @type {?} */ lastNavigation = this.navigations.value;
+        // If the user triggers a navigation imperatively (e.g., by using navigateByUrl),
+        // and that navigation results in 'replaceState' that leads to the same URL,
+        // we should skip those.
+        if (lastNavigation && source !== 'imperative' && lastNavigation.source === 'imperative' &&
+            lastNavigation.rawUrl.toString() === rawUrl.toString()) {
+            return null; // return value is not used
+        }
+        // Because of a bug in IE and Edge, the location class fires two events (popstate and
+        // hashchange)
+        // every single time. The second one should be ignored. Otherwise, the URL will flicker.
+        if (lastNavigation && source == 'hashchange' && lastNavigation.source === 'popstate' &&
+            lastNavigation.rawUrl.toString() === rawUrl.toString()) {
+            return null; // return value is not used
+        }
         let /** @type {?} */ resolve = null;
         let /** @type {?} */ reject = null;
         const /** @type {?} */ promise = new Promise((res, rej) => {
@@ -533,7 +605,7 @@ export class Router {
             reject = rej;
         });
         const /** @type {?} */ id = ++this.navigationId;
-        this.navigations.next({ id, imperative, rawUrl, extras, resolve, reject, promise });
+        this.navigations.next({ id, source, rawUrl, extras, resolve, reject, promise });
         // Make sure that the error is propagated even though `processNavigations` catch
         // handler does not rethrow
         return promise.catch((e) => Promise.reject(e));
@@ -996,10 +1068,11 @@ export class PreActivation {
             const /** @type {?} */ guard = this.getToken(c, curr);
             let /** @type {?} */ observable;
             if (guard.canDeactivate) {
-                observable = wrapIntoObservable(guard.canDeactivate(component, curr, this.curr));
+                observable =
+                    wrapIntoObservable(guard.canDeactivate(component, curr, this.curr, this.future));
             }
             else {
-                observable = wrapIntoObservable(guard(component, curr, this.curr));
+                observable = wrapIntoObservable(guard(component, curr, this.curr, this.future));
             }
             return first.call(observable);
         });
@@ -1321,5 +1394,17 @@ function getOutlet(outletMap, route) {
         }
     }
     return outlet;
+}
+/**
+ * @param {?} commands
+ * @return {?}
+ */
+function validateCommands(commands) {
+    for (let /** @type {?} */ i = 0; i < commands.length; i++) {
+        const /** @type {?} */ cmd = commands[i];
+        if (cmd == null) {
+            throw new Error(`The requested path contains ${cmd} segment at index ${i}`);
+        }
+    }
 }
 //# sourceMappingURL=router.js.map

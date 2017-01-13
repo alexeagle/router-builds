@@ -324,7 +324,7 @@
      * @return {?}
      */
     function containsQueryParams(container, containee) {
-        return Object.keys(containee) <= Object.keys(container) &&
+        return Object.keys(containee).length <= Object.keys(container).length &&
             Object.keys(containee).every(function (key) { return containee[key] === container[key]; });
     }
     /**
@@ -372,9 +372,12 @@
         }
     }
     /**
+     * \@whatItDoes Represents the parsed URL.
      *
+     * \@howToUse
      *
      * ```
+     * \@Component({templateUrl:'template.html'})
      * class MyComponent {
      *   constructor(router: Router) {
      *     const tree: UrlTree =
@@ -389,14 +392,17 @@
      * }
      * ```
      *
+     * \@description
      *
      * Since a router state is a tree, and the URL is nothing but a serialized state, the URL is a
      * serialized tree.
      * UrlTree is a data structure that provides a lot of affordances in dealing with URLs
      *
+     * \@stable
      */
     var UrlTree = (function () {
         /**
+         * \@internal
          * @param {?} root
          * @param {?} queryParams
          * @param {?} fragment
@@ -407,15 +413,18 @@
             this.fragment = fragment;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         UrlTree.prototype.toString = function () { return new DefaultUrlSerializer().serialize(this); };
         return UrlTree;
     }());
     /**
+     * \@whatItDoes Represents the parsed URL segment group.
      *
      * See {\@link UrlTree} for more information.
      *
+     * \@stable
      */
     var UrlSegmentGroup = (function () {
         /**
@@ -445,15 +454,19 @@
             configurable: true
         });
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         UrlSegmentGroup.prototype.toString = function () { return serializePaths(this); };
         return UrlSegmentGroup;
     }());
     /**
+     * \@whatItDoes Represents a single URL segment.
      *
+     * \@howToUse
      *
      * ```
+     * \@Component({templateUrl:'template.html'})
      * class MyComponent {
      *   constructor(router: Router) {
      *     const tree: UrlTree = router.parseUrl('/team;id=33');
@@ -465,10 +478,12 @@
      * }
      * ```
      *
+     * \@description
      *
      * A UrlSegment is a part of a URL between the two slashes. It contains a path and the matrix
      * parameters associated with the segment.
      *
+     * \@stable
      */
     var UrlSegment = (function () {
         /**
@@ -480,6 +495,7 @@
             this.parameters = parameters;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         UrlSegment.prototype.toString = function () { return serializePath(this); };
@@ -535,11 +551,14 @@
         return res;
     }
     /**
+     * \@whatItDoes Serializes and deserializes a URL string into a URL tree.
      *
+     * \@description The url serialization strategy is customizable. You can
      * make all URLs case insensitive by providing a custom UrlSerializer.
      *
      * See {\@link DefaultUrlSerializer} for an example of a URL serializer.
      *
+     * \@stable
      * @abstract
      */
     var UrlSerializer = (function () {
@@ -562,7 +581,9 @@
         return UrlSerializer;
     }());
     /**
+     * \@whatItDoes A default implementation of the {\@link UrlSerializer}.
      *
+     * \@description
      *
      * Example URLs:
      *
@@ -575,6 +596,7 @@
      * colon syntax to specify the outlet, and the ';parameter=value' syntax (e.g., open=true) to
      * specify route specific parameters.
      *
+     * \@stable
      */
     var DefaultUrlSerializer = (function () {
         function DefaultUrlSerializer() {
@@ -1252,7 +1274,7 @@
                 if (route.loadChildren) {
                     return rxjs_operator_map.map.call(this.configLoader.load(injector, route.loadChildren), function (r) {
                         ((route))._loadedConfig = r;
-                        return rxjs_observable_of.of(new UrlSegmentGroup(segments, {}));
+                        return new UrlSegmentGroup(segments, {});
                     });
                 }
                 else {
@@ -1676,7 +1698,7 @@
     }
 
     /**
-     * @license undefined
+     * @license
      * Copyright Google Inc. All Rights Reserved.
      *
      * Use of this source code is governed by an MIT-style license that can be
@@ -1698,6 +1720,7 @@
             configurable: true
         });
         /**
+         * \@internal
          * @param {?} t
          * @return {?}
          */
@@ -1706,6 +1729,7 @@
             return p.length > 1 ? p[p.length - 2] : null;
         };
         /**
+         * \@internal
          * @param {?} t
          * @return {?}
          */
@@ -1714,6 +1738,7 @@
             return n ? n.children.map(function (t) { return t.value; }) : [];
         };
         /**
+         * \@internal
          * @param {?} t
          * @return {?}
          */
@@ -1722,6 +1747,7 @@
             return n && n.children.length > 0 ? n.children[0].value : null;
         };
         /**
+         * \@internal
          * @param {?} t
          * @return {?}
          */
@@ -1733,6 +1759,7 @@
             return c.filter(function (cc) { return cc !== t; });
         };
         /**
+         * \@internal
          * @param {?} t
          * @return {?}
          */
@@ -1803,9 +1830,12 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     /**
+     * \@whatItDoes Represents the state of the router.
      *
+     * \@howToUse
      *
      * ```
+     * \@Component({templateUrl:'template.html'})
      * class MyComponent {
      *   constructor(router: Router) {
      *     const state: RouterState = router.routerState;
@@ -1817,16 +1847,19 @@
      * }
      * ```
      *
+     * \@description
      * RouterState is a tree of activated routes. Every node in this tree knows about the "consumed" URL
      * segments,
      * the extracted parameters, and the resolved data.
      *
      * See {\@link ActivatedRoute} for more information.
      *
+     * \@stable
      */
     var RouterState = (function (_super) {
         __extends$1(RouterState, _super);
         /**
+         * \@internal
          * @param {?} root
          * @param {?} snapshot
          */
@@ -1871,11 +1904,14 @@
         return new RouterStateSnapshot('', new TreeNode(activated, []));
     }
     /**
+     * \@whatItDoes Contains the information about a route associated with a component loaded in an
      * outlet.
      * An `ActivatedRoute` can also be used to traverse the router state tree.
      *
+     * \@howToUse
      *
      * ```
+     * \@Component({...})
      * class MyComponent {
      *   constructor(route: ActivatedRoute) {
      *     const id: Observable<string> = route.params.map(p => p.id);
@@ -1886,9 +1922,11 @@
      * }
      * ```
      *
+     * \@stable
      */
     var ActivatedRoute = (function () {
         /**
+         * \@internal
          * @param {?} url
          * @param {?} params
          * @param {?} queryParams
@@ -1971,6 +2009,7 @@
         return ActivatedRoute;
     }());
     /**
+     * \@internal
      * @param {?} route
      * @return {?}
      */
@@ -1999,12 +2038,15 @@
         }, /** @type {?} */ ({ params: {}, data: {}, resolve: {} }));
     }
     /**
+     * \@whatItDoes Contains the information about a route associated with a component loaded in an
      * outlet
      * at a particular moment in time. ActivatedRouteSnapshot can also be used to traverse the router
      * state tree.
      *
+     * \@howToUse
      *
      * ```
+     * \@Component({templateUrl:'./my-component.html'})
      * class MyComponent {
      *   constructor(route: ActivatedRoute) {
      *     const id: string = route.snapshot.params.id;
@@ -2014,9 +2056,11 @@
      * }
      * ```
      *
+     * \@stable
      */
     var ActivatedRouteSnapshot = (function () {
         /**
+         * \@internal
          * @param {?} url
          * @param {?} params
          * @param {?} queryParams
@@ -2107,9 +2151,12 @@
         return ActivatedRouteSnapshot;
     }());
     /**
+     * \@whatItDoes Represents the state of the router at a moment in time.
      *
+     * \@howToUse
      *
      * ```
+     * \@Component({templateUrl:'template.html'})
      * class MyComponent {
      *   constructor(router: Router) {
      *     const state: RouterState = router.routerState;
@@ -2122,13 +2169,16 @@
      * }
      * ```
      *
+     * \@description
      * RouterStateSnapshot is a tree of activated route snapshots. Every node in this tree knows about
      * the "consumed" URL segments, the extracted parameters, and the resolved data.
      *
+     * \@stable
      */
     var RouterStateSnapshot = (function (_super) {
         __extends$1(RouterStateSnapshot, _super);
         /**
+         * \@internal
          * @param {?} url
          * @param {?} root
          */
@@ -2169,22 +2219,23 @@
      */
     function advanceActivatedRoute(route) {
         if (route.snapshot) {
-            if (!shallowEqual(route.snapshot.queryParams, route._futureSnapshot.queryParams)) {
+            var /** @type {?} */ currentSnapshot = route.snapshot;
+            route.snapshot = route._futureSnapshot;
+            if (!shallowEqual(currentSnapshot.queryParams, route._futureSnapshot.queryParams)) {
                 ((route.queryParams)).next(route._futureSnapshot.queryParams);
             }
-            if (route.snapshot.fragment !== route._futureSnapshot.fragment) {
+            if (currentSnapshot.fragment !== route._futureSnapshot.fragment) {
                 ((route.fragment)).next(route._futureSnapshot.fragment);
             }
-            if (!shallowEqual(route.snapshot.params, route._futureSnapshot.params)) {
+            if (!shallowEqual(currentSnapshot.params, route._futureSnapshot.params)) {
                 ((route.params)).next(route._futureSnapshot.params);
             }
-            if (!shallowEqualArrays(route.snapshot.url, route._futureSnapshot.url)) {
+            if (!shallowEqualArrays(currentSnapshot.url, route._futureSnapshot.url)) {
                 ((route.url)).next(route._futureSnapshot.url);
             }
-            if (!equalParamsAndUrlSegments(route.snapshot, route._futureSnapshot)) {
+            if (!equalParamsAndUrlSegments(currentSnapshot, route._futureSnapshot)) {
                 ((route.data)).next(route._futureSnapshot.data);
             }
-            route.snapshot = route._futureSnapshot;
         }
         else {
             route.snapshot = route._futureSnapshot;
@@ -2198,7 +2249,10 @@
      * @return {?}
      */
     function equalParamsAndUrlSegments(a, b) {
-        return shallowEqual(a.params, b.params) && equalSegments(a.url, b.url);
+        var /** @type {?} */ equalUrlParams = shallowEqual(a.params, b.params) && equalSegments(a.url, b.url);
+        var /** @type {?} */ parentsMismatch = !a.parent !== !b.parent;
+        return equalUrlParams && !parentsMismatch &&
+            (!a.parent || equalParamsAndUrlSegments(a.parent, b.parent));
     }
 
     /**
@@ -2305,7 +2359,7 @@
      * @return {?}
      */
     function isMatrixParams(command) {
-        return typeof command === 'object' && !command.outlets && !command.segmentPath;
+        return typeof command === 'object' && command != null && !command.outlets && !command.segmentPath;
     }
     /**
      * @param {?} oldSegmentGroup
@@ -2352,7 +2406,7 @@
             if (isAbsolute && commands.length > 0 && isMatrixParams(commands[0])) {
                 throw new Error('Root segment cannot have matrix parameters');
             }
-            var cmdWithOutlet = commands.find(function (c) { return typeof c === 'object' && c.outlets; });
+            var cmdWithOutlet = commands.find(function (c) { return typeof c === 'object' && c != null && c.outlets; });
             if (cmdWithOutlet && cmdWithOutlet !== last(commands)) {
                 throw new Error('{outlets:{}} has to be the last command');
             }
@@ -2377,7 +2431,7 @@
         var /** @type {?} */ numberOfDoubleDots = 0;
         var /** @type {?} */ isAbsolute = false;
         var /** @type {?} */ res = commands.reduce(function (res, cmd, cmdIdx) {
-            if (typeof cmd === 'object') {
+            if (typeof cmd === 'object' && cmd != null) {
                 if (cmd.outlets) {
                     var /** @type {?} */ outlets_1 = {};
                     forEach(cmd.outlets, function (commands, name) {
@@ -2467,8 +2521,9 @@
      * @return {?}
      */
     function getPath(command) {
-        if (typeof command === 'object' && command.outlets)
+        if (typeof command === 'object' && command != null && command.outlets) {
             return command.outlets[PRIMARY_OUTLET];
+        }
         return "" + command;
     }
     /**
@@ -3020,7 +3075,9 @@
      * found in the LICENSE file at https://angular.io/license
      */
     /**
+     * \@whatItDoes Contains all the router outlets created in a component.
      *
+     * \@stable
      */
     var RouterOutletMap = (function () {
         function RouterOutletMap() {
@@ -3051,7 +3108,9 @@
      * found in the LICENSE file at https://angular.io/license
      */
     /**
+     * \@whatItDoes Provides a way to migrate Angular 1 applications to Angular 2.
      *
+     * \@experimental
      * @abstract
      */
     var UrlHandlingStrategy = (function () {
@@ -3087,6 +3146,9 @@
         UrlHandlingStrategy.prototype.merge = function (newUrlPart, rawUrl) { };
         return UrlHandlingStrategy;
     }());
+    /**
+     * \@experimental
+     */
     var DefaultUrlHandlingStrategy = (function () {
         function DefaultUrlHandlingStrategy() {
         }
@@ -3110,7 +3172,9 @@
     }());
 
     /**
+     * \@whatItDoes Represents an event triggered when a navigation starts.
      *
+     * \@stable
      */
     var NavigationStart = (function () {
         /**
@@ -3122,13 +3186,16 @@
             this.url = url;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         NavigationStart.prototype.toString = function () { return "NavigationStart(id: " + this.id + ", url: '" + this.url + "')"; };
         return NavigationStart;
     }());
     /**
+     * \@whatItDoes Represents an event triggered when a navigation ends successfully.
      *
+     * \@stable
      */
     var NavigationEnd = (function () {
         /**
@@ -3142,6 +3209,7 @@
             this.urlAfterRedirects = urlAfterRedirects;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         NavigationEnd.prototype.toString = function () {
@@ -3150,7 +3218,9 @@
         return NavigationEnd;
     }());
     /**
+     * \@whatItDoes Represents an event triggered when a navigation is canceled.
      *
+     * \@stable
      */
     var NavigationCancel = (function () {
         /**
@@ -3164,13 +3234,16 @@
             this.reason = reason;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         NavigationCancel.prototype.toString = function () { return "NavigationCancel(id: " + this.id + ", url: '" + this.url + "')"; };
         return NavigationCancel;
     }());
     /**
+     * \@whatItDoes Represents an event triggered when a navigation fails due to an unexpected error.
      *
+     * \@stable
      */
     var NavigationError = (function () {
         /**
@@ -3184,6 +3257,7 @@
             this.error = error;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         NavigationError.prototype.toString = function () {
@@ -3192,7 +3266,9 @@
         return NavigationError;
     }());
     /**
+     * \@whatItDoes Represents an event triggered when routes are recognized.
      *
+     * \@stable
      */
     var RoutesRecognized = (function () {
         /**
@@ -3208,6 +3284,7 @@
             this.state = state;
         }
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         RoutesRecognized.prototype.toString = function () {
@@ -3260,10 +3337,13 @@
         return DefaultRouteReuseStrategy;
     }());
     /**
+     * \@whatItDoes Provides the navigation and url manipulation capabilities.
      *
      * See {\@link Routes} for more details and examples.
      *
+     * \@ngModule RouterModule
      *
+     * \@stable
      */
     var Router = (function () {
         /**
@@ -3309,6 +3389,7 @@
             this.processNavigations();
         }
         /**
+         * \@internal
          * TODO: this should be removed once the constructor of the router made internal
          * @param {?} rootComponentType
          * @return {?}
@@ -3338,17 +3419,8 @@
             if (!this.locationSubscription) {
                 this.locationSubscription = (this.location.subscribe(Zone.current.wrap(function (change) {
                     var /** @type {?} */ rawUrlTree = _this.urlSerializer.parse(change['url']);
-                    var /** @type {?} */ lastNavigation = _this.navigations.value;
-                    // If the user triggers a navigation imperatively (e.g., by using navigateByUrl),
-                    // and that navigation results in 'replaceState' that leads to the same URL,
-                    // we should skip those.
-                    if (lastNavigation && lastNavigation.imperative &&
-                        lastNavigation.rawUrl.toString() === rawUrlTree.toString()) {
-                        return;
-                    }
-                    setTimeout(function () {
-                        _this.scheduleNavigation(rawUrlTree, false, { skipLocationChange: change['pop'], replaceUrl: true });
-                    }, 0);
+                    var /** @type {?} */ source = change['type'] === 'popstate' ? 'popstate' : 'hashchange';
+                    setTimeout(function () { _this.scheduleNavigation(rawUrlTree, source, { replaceUrl: true }); }, 0);
                 })));
             }
         };
@@ -3400,6 +3472,7 @@
             this.config = config;
         };
         /**
+         * \@docsNotRequired
          * @return {?}
          */
         Router.prototype.ngOnDestroy = function () { this.dispose(); };
@@ -3490,10 +3563,10 @@
         Router.prototype.navigateByUrl = function (url, extras) {
             if (extras === void 0) { extras = { skipLocationChange: false }; }
             if (url instanceof UrlTree) {
-                return this.scheduleNavigation(this.urlHandlingStrategy.merge(url, this.rawUrlTree), true, extras);
+                return this.scheduleNavigation(this.urlHandlingStrategy.merge(url, this.rawUrlTree), 'imperative', extras);
             }
             var /** @type {?} */ urlTree = this.urlSerializer.parse(url);
-            return this.scheduleNavigation(this.urlHandlingStrategy.merge(urlTree, this.rawUrlTree), true, extras);
+            return this.scheduleNavigation(this.urlHandlingStrategy.merge(urlTree, this.rawUrlTree), 'imperative', extras);
         };
         /**
          * Navigate based on the provided array of commands and a starting point.
@@ -3521,6 +3594,7 @@
          */
         Router.prototype.navigate = function (commands, extras) {
             if (extras === void 0) { extras = { skipLocationChange: false }; }
+            validateCommands(commands);
             if (typeof extras.queryParams === 'object' && extras.queryParams !== null) {
                 extras.queryParams = this.removeEmptyProps(extras.queryParams);
             }
@@ -3587,11 +3661,26 @@
         };
         /**
          * @param {?} rawUrl
-         * @param {?} imperative
+         * @param {?} source
          * @param {?} extras
          * @return {?}
          */
-        Router.prototype.scheduleNavigation = function (rawUrl, imperative, extras) {
+        Router.prototype.scheduleNavigation = function (rawUrl, source, extras) {
+            var /** @type {?} */ lastNavigation = this.navigations.value;
+            // If the user triggers a navigation imperatively (e.g., by using navigateByUrl),
+            // and that navigation results in 'replaceState' that leads to the same URL,
+            // we should skip those.
+            if (lastNavigation && source !== 'imperative' && lastNavigation.source === 'imperative' &&
+                lastNavigation.rawUrl.toString() === rawUrl.toString()) {
+                return null; // return value is not used
+            }
+            // Because of a bug in IE and Edge, the location class fires two events (popstate and
+            // hashchange)
+            // every single time. The second one should be ignored. Otherwise, the URL will flicker.
+            if (lastNavigation && source == 'hashchange' && lastNavigation.source === 'popstate' &&
+                lastNavigation.rawUrl.toString() === rawUrl.toString()) {
+                return null; // return value is not used
+            }
             var /** @type {?} */ resolve = null;
             var /** @type {?} */ reject = null;
             var /** @type {?} */ promise = new Promise(function (res, rej) {
@@ -3599,7 +3688,7 @@
                 reject = rej;
             });
             var /** @type {?} */ id = ++this.navigationId;
-            this.navigations.next({ id: id, imperative: imperative, rawUrl: rawUrl, extras: extras, resolve: resolve, reject: reject, promise: promise });
+            this.navigations.next({ id: id, source: source, rawUrl: rawUrl, extras: extras, resolve: resolve, reject: reject, promise: promise });
             // Make sure that the error is propagated even though `processNavigations` catch
             // handler does not rethrow
             return promise.catch(function (e) { return Promise.reject(e); });
@@ -4024,10 +4113,11 @@
                 var /** @type {?} */ guard = _this.getToken(c, curr);
                 var /** @type {?} */ observable;
                 if (guard.canDeactivate) {
-                    observable = wrapIntoObservable(guard.canDeactivate(component, curr, _this.curr));
+                    observable =
+                        wrapIntoObservable(guard.canDeactivate(component, curr, _this.curr, _this.future));
                 }
                 else {
-                    observable = wrapIntoObservable(guard(component, curr, _this.curr));
+                    observable = wrapIntoObservable(guard(component, curr, _this.curr, _this.future));
                 }
                 return rxjs_operator_first.first.call(observable);
             });
@@ -4338,9 +4428,23 @@
         }
         return outlet;
     }
+    /**
+     * @param {?} commands
+     * @return {?}
+     */
+    function validateCommands(commands) {
+        for (var /** @type {?} */ i = 0; i < commands.length; i++) {
+            var /** @type {?} */ cmd = commands[i];
+            if (cmd == null) {
+                throw new Error("The requested path contains " + cmd + " segment at index " + i);
+            }
+        }
+    }
 
     /**
+     * \@whatItDoes Lets you link to specific parts of your app.
      *
+     * \@howToUse
      *
      * Consider the following route configuration:
      * `[{ path: 'user/:name', component: UserCmp }]`
@@ -4348,6 +4452,7 @@
      * When linking to this `user/:name` route, you can write:
      * `<a routerLink='/user/bob'>link to user component</a>`
      *
+     * \@description
      *
      * The RouterLink directives let you link to specific parts of your app.
      *
@@ -4394,9 +4499,12 @@
      * Then the following link `<a [routerLink]="['/user/jim']">Jim</a>` will generate the link
      * `/user/(jim//aux:team)`.
      *
+     * \@selector ':not(a)[routerLink]'
+     * \@ngModule RouterModule
      *
      * See {\@link Router.createUrlTree} for more information.
      *
+     * \@stable
      */
     var RouterLink = (function () {
         /**
@@ -4416,15 +4524,15 @@
         }
         Object.defineProperty(RouterLink.prototype, "routerLink", {
             /**
-             * @param {?} data
+             * @param {?} commands
              * @return {?}
              */
-            set: function (data) {
-                if (Array.isArray(data)) {
-                    this.commands = data;
+            set: function (commands) {
+                if (commands != null) {
+                    this.commands = Array.isArray(commands) ? commands : [commands];
                 }
                 else {
-                    this.commands = [data];
+                    this.commands = [];
                 }
             },
             enumerable: true,
@@ -4476,15 +4584,19 @@
             'skipLocationChange': [{ type: _angular_core.Input },],
             'replaceUrl': [{ type: _angular_core.Input },],
             'routerLink': [{ type: _angular_core.Input },],
-            'onClick': [{ type: _angular_core.HostListener, args: ['click', [],] },],
+            'onClick': [{ type: _angular_core.HostListener, args: ['click',] },],
         };
         return RouterLink;
     }());
     /**
+     * \@whatItDoes Lets you link to specific parts of your app.
      *
      * See {\@link RouterLink} for more information.
      *
+     * \@selector 'a[routerLink]'
+     * \@ngModule RouterModule
      *
+     * \@stable
      */
     var RouterLinkWithHref = (function () {
         /**
@@ -4506,15 +4618,15 @@
         }
         Object.defineProperty(RouterLinkWithHref.prototype, "routerLink", {
             /**
-             * @param {?} data
+             * @param {?} commands
              * @return {?}
              */
-            set: function (data) {
-                if (Array.isArray(data)) {
-                    this.commands = data;
+            set: function (commands) {
+                if (commands != null) {
+                    this.commands = Array.isArray(commands) ? commands : [commands];
                 }
                 else {
-                    this.commands = [data];
+                    this.commands = [];
                 }
             },
             enumerable: true,
@@ -4581,7 +4693,7 @@
             { type: _angular_common.LocationStrategy, },
         ]; };
         RouterLinkWithHref.propDecorators = {
-            'target': [{ type: _angular_core.Input },],
+            'target': [{ type: _angular_core.HostBinding, args: ['attr.target',] }, { type: _angular_core.Input },],
             'queryParams': [{ type: _angular_core.Input },],
             'fragment': [{ type: _angular_core.Input },],
             'preserveQueryParams': [{ type: _angular_core.Input },],
@@ -4603,12 +4715,15 @@
     }
 
     /**
+     * \@whatItDoes Lets you add a CSS class to an element when the link's route becomes active.
      *
+     * \@howToUse
      *
      * ```
      * <a routerLink="/user/bob" routerLinkActive="active-link">Bob</a>
      * ```
      *
+     * \@description
      *
      * The RouterLinkActive directive lets you add a CSS class to an element when the link's route
      * becomes active.
@@ -4657,7 +4772,10 @@
      * This will set the active-link class on the div tag if the url is either '/user/jim' or
      * '/user/bob'.
      *
+     * \@selector ':not(a)[routerLink]'
+     * \@ngModule RouterModule
      *
+     * \@stable
      */
     var RouterLinkActive = (function () {
         /**
@@ -4773,8 +4891,10 @@
     }());
 
     /**
+     * \@whatItDoes Acts as a placeholder that Angular dynamically fills based on the current router
      * state.
      *
+     * \@howToUse
      *
      * ```
      * <router-outlet></router-outlet>
@@ -4790,7 +4910,10 @@
      *   (activate)='onActivate($event)'
      *   (deactivate)='onDeactivate($event)'></router-outlet>
      * ```
+     * \@selector 'a[routerLink]'
+     * \@ngModule RouterModule
      *
+     * \@stable
      */
     var RouterOutlet = (function () {
         /**
@@ -4941,7 +5064,9 @@
      * found in the LICENSE file at https://angular.io/license
      */
     /**
+     * \@whatItDoes Provides a way to customize when activated routes get reused.
      *
+     * \@experimental
      * @abstract
      */
     var RouteReuseStrategy = (function () {
@@ -4990,7 +5115,9 @@
     var /** @type {?} */ getDOM = _angular_platformBrowser.__platform_browser_private__.getDOM;
 
     /**
+     * \@whatItDoes Provides a preloading strategy.
      *
+     * \@experimental
      * @abstract
      */
     var PreloadingStrategy = (function () {
@@ -5006,12 +5133,15 @@
         return PreloadingStrategy;
     }());
     /**
+     * \@whatItDoes Provides a preloading strategy that preloads all modules as quicky as possible.
      *
+     * \@howToUse
      *
      * ```
      * RouteModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
      * ```
      *
+     * \@experimental
      */
     var PreloadAllModules = (function () {
         function PreloadAllModules() {
@@ -5027,10 +5157,13 @@
         return PreloadAllModules;
     }());
     /**
+     * \@whatItDoes Provides a preloading strategy that does not preload any modules.
      *
+     * \@description
      *
      * This strategy is enabled by default.
      *
+     * \@experimental
      */
     var NoPreloading = (function () {
         function NoPreloading() {
@@ -5053,6 +5186,7 @@
      *
      * If a route is protected by `canLoad` guards, the preloaded will not load it.
      *
+     * \@stable
      */
     var RouterPreloader = (function () {
         /**
@@ -5179,7 +5313,9 @@
         return new _angular_core.NgProbeToken('Router', Router);
     }
     /**
+     * \@whatItDoes Adds router directives and providers.
      *
+     * \@howToUse
      *
      * RouterModule can be imported multiple times: once per lazily-loaded bundle.
      * Since the router deals with a global shared resource--location, we cannot have
@@ -5196,6 +5332,7 @@
      * When registered at the root, the module should be used as follows
      *
      * ```
+     * \@NgModule({
      *   imports: [RouterModule.forRoot(ROUTES)]
      * })
      * class MyNgModule {}
@@ -5204,11 +5341,13 @@
      * For submodules and lazy loaded submodules the module should be used as follows:
      *
      * ```
+     * \@NgModule({
      *   imports: [RouterModule.forChild(ROUTES)]
      * })
      * class MyNgModule {}
      * ```
      *
+     * \@description
      *
      * Managing state transitions is one of the hardest parts of building applications. This is
      * especially true on the web, where you also need to ensure that the state is reflected in the URL.
@@ -5222,6 +5361,7 @@
      * [Read this developer guide](https://angular.io/docs/ts/latest/guide/router.html) to get an
      * overview of how the router should be used.
      *
+     * \@stable
      */
     var RouterModule = (function () {
         /**
@@ -5311,15 +5451,19 @@
         return 'guarded';
     }
     /**
+     * \@whatItDoes Registers routes.
      *
+     * \@howToUse
      *
      * ```
+     * \@NgModule({
      *   imports: [RouterModule.forChild(ROUTES)],
      *   providers: [provideRoutes(EXTRA_ROUTES)]
      * })
      * class MyNgModule {}
      * ```
      *
+     * \@stable
      * @param {?} routes
      * @return {?}
      */

@@ -1,5 +1,5 @@
 /**
- * @license undefined
+ * @license
  * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
@@ -17,6 +17,7 @@ export class Tree {
      */
     get root() { return this._root.value; }
     /**
+     * \@internal
      * @param {?} t
      * @return {?}
      */
@@ -25,6 +26,7 @@ export class Tree {
         return p.length > 1 ? p[p.length - 2] : null;
     }
     /**
+     * \@internal
      * @param {?} t
      * @return {?}
      */
@@ -33,6 +35,7 @@ export class Tree {
         return n ? n.children.map(t => t.value) : [];
     }
     /**
+     * \@internal
      * @param {?} t
      * @return {?}
      */
@@ -41,6 +44,7 @@ export class Tree {
         return n && n.children.length > 0 ? n.children[0].value : null;
     }
     /**
+     * \@internal
      * @param {?} t
      * @return {?}
      */
@@ -52,13 +56,17 @@ export class Tree {
         return c.filter(cc => cc !== t);
     }
     /**
+     * \@internal
      * @param {?} t
      * @return {?}
      */
     pathFromRoot(t) { return findPath(t, this._root, []).map(s => s.value); }
 }
 function Tree_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     Tree.prototype._root;
 }
 /**

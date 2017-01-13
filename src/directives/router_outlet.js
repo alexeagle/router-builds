@@ -9,8 +9,10 @@ import { Attribute, ComponentFactoryResolver, Directive, EventEmitter, Output, R
 import { RouterOutletMap } from '../router_outlet_map';
 import { PRIMARY_OUTLET } from '../shared';
 /**
+ * \@whatItDoes Acts as a placeholder that Angular dynamically fills based on the current router
  * state.
  *
+ * \@howToUse
  *
  * ```
  * <router-outlet></router-outlet>
@@ -26,7 +28,10 @@ import { PRIMARY_OUTLET } from '../shared';
  *   (activate)='onActivate($event)'
  *   (deactivate)='onDeactivate($event)'></router-outlet>
  * ```
+ * \@selector 'a[routerLink]'
+ * \@ngModule RouterModule
  *
+ * \@stable
  */
 export class RouterOutlet {
     /**

@@ -59,7 +59,7 @@ function equalSegmentGroups(container, containee) {
  * @return {?}
  */
 function containsQueryParams(container, containee) {
-    return Object.keys(containee) <= Object.keys(container) &&
+    return Object.keys(containee).length <= Object.keys(container).length &&
         Object.keys(containee).every(key => containee[key] === container[key]);
 }
 /**
@@ -107,9 +107,12 @@ function containsSegmentGroupHelper(container, containee, containeePaths) {
     }
 }
 /**
+ * \@whatItDoes Represents the parsed URL.
  *
+ * \@howToUse
  *
  * ```
+ * \@Component({templateUrl:'template.html'})
  * class MyComponent {
  *   constructor(router: Router) {
  *     const tree: UrlTree =
@@ -124,14 +127,17 @@ function containsSegmentGroupHelper(container, containee, containeePaths) {
  * }
  * ```
  *
+ * \@description
  *
  * Since a router state is a tree, and the URL is nothing but a serialized state, the URL is a
  * serialized tree.
  * UrlTree is a data structure that provides a lot of affordances in dealing with URLs
  *
+ * \@stable
  */
 export class UrlTree {
     /**
+     * \@internal
      * @param {?} root
      * @param {?} queryParams
      * @param {?} fragment
@@ -142,6 +148,7 @@ export class UrlTree {
         this.fragment = fragment;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() { return new DefaultUrlSerializer().serialize(this); }
@@ -164,9 +171,11 @@ function UrlTree_tsickle_Closure_declarations() {
     UrlTree.prototype.fragment;
 }
 /**
+ * \@whatItDoes Represents the parsed URL segment group.
  *
  * See {\@link UrlTree} for more information.
  *
+ * \@stable
  */
 export class UrlSegmentGroup {
     /**
@@ -191,14 +200,21 @@ export class UrlSegmentGroup {
      */
     get numberOfChildren() { return Object.keys(this.children).length; }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() { return serializePaths(this); }
 }
 function UrlSegmentGroup_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     UrlSegmentGroup.prototype._sourceSegment;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     UrlSegmentGroup.prototype._segmentIndexShift;
     /**
      * The parent node in the url tree
@@ -217,9 +233,12 @@ function UrlSegmentGroup_tsickle_Closure_declarations() {
     UrlSegmentGroup.prototype.children;
 }
 /**
+ * \@whatItDoes Represents a single URL segment.
  *
+ * \@howToUse
  *
  * ```
+ * \@Component({templateUrl:'template.html'})
  * class MyComponent {
  *   constructor(router: Router) {
  *     const tree: UrlTree = router.parseUrl('/team;id=33');
@@ -231,10 +250,12 @@ function UrlSegmentGroup_tsickle_Closure_declarations() {
  * }
  * ```
  *
+ * \@description
  *
  * A UrlSegment is a part of a URL between the two slashes. It contains a path and the matrix
  * parameters associated with the segment.
  *
+ * \@stable
  */
 export class UrlSegment {
     /**
@@ -246,6 +267,7 @@ export class UrlSegment {
         this.parameters = parameters;
     }
     /**
+     * \@docsNotRequired
      * @return {?}
      */
     toString() { return serializePath(this); }
@@ -312,11 +334,14 @@ export function mapChildrenIntoArray(segment, fn) {
     return res;
 }
 /**
+ * \@whatItDoes Serializes and deserializes a URL string into a URL tree.
  *
+ * \@description The url serialization strategy is customizable. You can
  * make all URLs case insensitive by providing a custom UrlSerializer.
  *
  * See {\@link DefaultUrlSerializer} for an example of a URL serializer.
  *
+ * \@stable
  * @abstract
  */
 export class UrlSerializer {
@@ -336,7 +361,9 @@ export class UrlSerializer {
     serialize(tree) { }
 }
 /**
+ * \@whatItDoes A default implementation of the {\@link UrlSerializer}.
  *
+ * \@description
  *
  * Example URLs:
  *
@@ -349,6 +376,7 @@ export class UrlSerializer {
  * colon syntax to specify the outlet, and the ';parameter=value' syntax (e.g., open=true) to
  * specify route specific parameters.
  *
+ * \@stable
  */
 export class DefaultUrlSerializer {
     /**

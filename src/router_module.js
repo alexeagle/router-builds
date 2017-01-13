@@ -61,7 +61,9 @@ export function routerNgProbeToken() {
     return new NgProbeToken('Router', Router);
 }
 /**
+ * \@whatItDoes Adds router directives and providers.
  *
+ * \@howToUse
  *
  * RouterModule can be imported multiple times: once per lazily-loaded bundle.
  * Since the router deals with a global shared resource--location, we cannot have
@@ -78,6 +80,7 @@ export function routerNgProbeToken() {
  * When registered at the root, the module should be used as follows
  *
  * ```
+ * \@NgModule({
  *   imports: [RouterModule.forRoot(ROUTES)]
  * })
  * class MyNgModule {}
@@ -86,11 +89,13 @@ export function routerNgProbeToken() {
  * For submodules and lazy loaded submodules the module should be used as follows:
  *
  * ```
+ * \@NgModule({
  *   imports: [RouterModule.forChild(ROUTES)]
  * })
  * class MyNgModule {}
  * ```
  *
+ * \@description
  *
  * Managing state transitions is one of the hardest parts of building applications. This is
  * especially true on the web, where you also need to ensure that the state is reflected in the URL.
@@ -104,6 +109,7 @@ export function routerNgProbeToken() {
  * [Read this developer guide](https://angular.io/docs/ts/latest/guide/router.html) to get an
  * overview of how the router should be used.
  *
+ * \@stable
  */
 export class RouterModule {
     /**
@@ -200,15 +206,19 @@ export function provideForRootGuard(router) {
     return 'guarded';
 }
 /**
+ * \@whatItDoes Registers routes.
  *
+ * \@howToUse
  *
  * ```
+ * \@NgModule({
  *   imports: [RouterModule.forChild(ROUTES)],
  *   providers: [provideRoutes(EXTRA_ROUTES)]
  * })
  * class MyNgModule {}
  * ```
  *
+ * \@stable
  * @param {?} routes
  * @return {?}
  */

@@ -35,7 +35,7 @@ export function createUrlTree(route, urlTree, commands, queryParams, fragment) {
  * @return {?}
  */
 function isMatrixParams(command) {
-    return typeof command === 'object' && !command.outlets && !command.segmentPath;
+    return typeof command === 'object' && command != null && !command.outlets && !command.segmentPath;
 }
 /**
  * @param {?} oldSegmentGroup
@@ -82,7 +82,7 @@ class Navigation {
         if (isAbsolute && commands.length > 0 && isMatrixParams(commands[0])) {
             throw new Error('Root segment cannot have matrix parameters');
         }
-        const cmdWithOutlet = commands.find(c => typeof c === 'object' && c.outlets);
+        const cmdWithOutlet = commands.find(c => typeof c === 'object' && c != null && c.outlets);
         if (cmdWithOutlet && cmdWithOutlet !== last(commands)) {
             throw new Error('{outlets:{}} has to be the last command');
         }
@@ -114,7 +114,7 @@ function computeNavigation(commands) {
     let /** @type {?} */ numberOfDoubleDots = 0;
     let /** @type {?} */ isAbsolute = false;
     const /** @type {?} */ res = commands.reduce((res, cmd, cmdIdx) => {
-        if (typeof cmd === 'object') {
+        if (typeof cmd === 'object' && cmd != null) {
             if (cmd.outlets) {
                 const /** @type {?} */ outlets = {};
                 forEach(cmd.outlets, (commands, name) => {
@@ -211,8 +211,9 @@ function createPositionApplyingDoubleDots(group, index, numberOfDoubleDots) {
  * @return {?}
  */
 function getPath(command) {
-    if (typeof command === 'object' && command.outlets)
+    if (typeof command === 'object' && command != null && command.outlets) {
         return command.outlets[PRIMARY_OUTLET];
+    }
     return `${command}`;
 }
 /**

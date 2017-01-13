@@ -315,7 +315,7 @@ class ApplyRedirects {
             if (route.loadChildren) {
                 return map.call(this.configLoader.load(injector, route.loadChildren), (r) => {
                     ((route))._loadedConfig = r;
-                    return of(new UrlSegmentGroup(segments, {}));
+                    return new UrlSegmentGroup(segments, {});
                 });
             }
             else {

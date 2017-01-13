@@ -16,7 +16,9 @@ import { mergeMap } from 'rxjs/operator/mergeMap';
 import { NavigationEnd, Router } from './router';
 import { RouterConfigLoader } from './router_config_loader';
 /**
+ * \@whatItDoes Provides a preloading strategy.
  *
+ * \@experimental
  * @abstract
  */
 export class PreloadingStrategy {
@@ -29,12 +31,15 @@ export class PreloadingStrategy {
     preload(route, fn) { }
 }
 /**
+ * \@whatItDoes Provides a preloading strategy that preloads all modules as quicky as possible.
  *
+ * \@howToUse
  *
  * ```
  * RouteModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
  * ```
  *
+ * \@experimental
  */
 export class PreloadAllModules {
     /**
@@ -47,10 +52,13 @@ export class PreloadAllModules {
     }
 }
 /**
+ * \@whatItDoes Provides a preloading strategy that does not preload any modules.
  *
+ * \@description
  *
  * This strategy is enabled by default.
  *
+ * \@experimental
  */
 export class NoPreloading {
     /**
@@ -70,6 +78,7 @@ export class NoPreloading {
  *
  * If a route is protected by `canLoad` guards, the preloaded will not load it.
  *
+ * \@stable
  */
 export class RouterPreloader {
     /**

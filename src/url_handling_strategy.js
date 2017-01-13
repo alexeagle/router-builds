@@ -6,7 +6,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /**
+ * \@whatItDoes Provides a way to migrate Angular 1 applications to Angular 2.
  *
+ * \@experimental
  * @abstract
  */
 export class UrlHandlingStrategy {
@@ -39,6 +41,9 @@ export class UrlHandlingStrategy {
      */
     merge(newUrlPart, rawUrl) { }
 }
+/**
+ * \@experimental
+ */
 export class DefaultUrlHandlingStrategy {
     /**
      * @param {?} url

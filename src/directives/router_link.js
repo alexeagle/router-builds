@@ -10,7 +10,9 @@ import { Attribute, Directive, ElementRef, HostBinding, HostListener, Input, Ren
 import { NavigationEnd, Router } from '../router';
 import { ActivatedRoute } from '../router_state';
 /**
+ * \@whatItDoes Lets you link to specific parts of your app.
  *
+ * \@howToUse
  *
  * Consider the following route configuration:
  * `[{ path: 'user/:name', component: UserCmp }]`
@@ -18,6 +20,7 @@ import { ActivatedRoute } from '../router_state';
  * When linking to this `user/:name` route, you can write:
  * `<a routerLink='/user/bob'>link to user component</a>`
  *
+ * \@description
  *
  * The RouterLink directives let you link to specific parts of your app.
  *
@@ -64,9 +67,12 @@ import { ActivatedRoute } from '../router_state';
  * Then the following link `<a [routerLink]="['/user/jim']">Jim</a>` will generate the link
  * `/user/(jim//aux:team)`.
  *
+ * \@selector ':not(a)[routerLink]'
+ * \@ngModule RouterModule
  *
  * See {\@link Router.createUrlTree} for more information.
  *
+ * \@stable
  */
 export class RouterLink {
     /**
@@ -85,15 +91,15 @@ export class RouterLink {
         }
     }
     /**
-     * @param {?} data
+     * @param {?} commands
      * @return {?}
      */
-    set routerLink(data) {
-        if (Array.isArray(data)) {
-            this.commands = data;
+    set routerLink(commands) {
+        if (commands != null) {
+            this.commands = Array.isArray(commands) ? commands : [commands];
         }
         else {
-            this.commands = [data];
+            this.commands = [];
         }
     }
     /**
@@ -139,7 +145,7 @@ RouterLink.propDecorators = {
     'skipLocationChange': [{ type: Input },],
     'replaceUrl': [{ type: Input },],
     'routerLink': [{ type: Input },],
-    'onClick': [{ type: HostListener, args: ['click', [],] },],
+    'onClick': [{ type: HostListener, args: ['click',] },],
 };
 function RouterLink_tsickle_Closure_declarations() {
     /** @type {?} */
@@ -171,10 +177,14 @@ function RouterLink_tsickle_Closure_declarations() {
     RouterLink.prototype.route;
 }
 /**
+ * \@whatItDoes Lets you link to specific parts of your app.
  *
  * See {\@link RouterLink} for more information.
  *
+ * \@selector 'a[routerLink]'
+ * \@ngModule RouterModule
  *
+ * \@stable
  */
 export class RouterLinkWithHref {
     /**
@@ -194,15 +204,15 @@ export class RouterLinkWithHref {
         });
     }
     /**
-     * @param {?} data
+     * @param {?} commands
      * @return {?}
      */
-    set routerLink(data) {
-        if (Array.isArray(data)) {
-            this.commands = data;
+    set routerLink(commands) {
+        if (commands != null) {
+            this.commands = Array.isArray(commands) ? commands : [commands];
         }
         else {
-            this.commands = [data];
+            this.commands = [];
         }
     }
     /**
@@ -263,7 +273,7 @@ RouterLinkWithHref.ctorParameters = () => [
     { type: LocationStrategy, },
 ];
 RouterLinkWithHref.propDecorators = {
-    'target': [{ type: Input },],
+    'target': [{ type: HostBinding, args: ['attr.target',] }, { type: Input },],
     'queryParams': [{ type: Input },],
     'fragment': [{ type: Input },],
     'preserveQueryParams': [{ type: Input },],
